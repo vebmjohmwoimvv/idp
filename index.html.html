@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Без упереджень: інтеграція ВПО у громадах</title>
+  <style>
+    :root {
+      --bg: #f6f2ea;
+      --bg2: #fffaf1;
+      --card: #ffffff;
+      --text: #18212f;
+      --muted: #667085;
+      --accent: #3b82a0;
+      --accent2: #f2b84b;
+      --accent3: #5d8068;
+      --dark: #1d3340;
+      --line: #e7dfd2;
+      --shadow: 0 18px 50px rgba(24,33,47,.09);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Inter, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; }
+    a { color: inherit; }
+    header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    nav { max-width: 1180px; margin: auto; padding: 14px 22px; display: flex; justify-content: space-between; gap: 18px; align-items: center; }
+    .logo { font-weight: 800; color: var(--dark); letter-spacing: -.3px; }
+    .nav-links { display: flex; gap: 16px; flex-wrap: wrap; }
+    .nav-links a { text-decoration: none; font-size: 14px; color: #344054; }
+    .hero { min-height: 78vh; display: grid; place-items: center; padding: 86px 22px; background:
+      radial-gradient(circle at 10% 20%, rgba(242,184,75,.25), transparent 35%),
+      radial-gradient(circle at 88% 12%, rgba(59,130,160,.25), transparent 33%),
+      linear-gradient(135deg, #274657 0%, #587a86 58%, #f1c46d 160%); color: white; }
+    .hero-inner { max-width: 1120px; display: grid; grid-template-columns: 1.12fr .88fr; gap: 36px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items:center; gap: 8px; padding: 8px 13px; border-radius: 999px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28); font-size: 13px; font-weight: 700; margin-bottom: 18px; }
+    h1 { font-size: clamp(40px, 7vw, 76px); line-height: 1.02; letter-spacing: -2px; margin-bottom: 18px; }
+    .hero p { font-size: clamp(17px, 2vw, 22px); color: rgba(255,255,255,.92); max-width: 760px; margin-bottom: 28px; }
+    .btn { display: inline-block; padding: 13px 20px; border-radius: 999px; background: var(--accent2); color: #1c1917; text-decoration: none; font-weight: 800; box-shadow: 0 12px 28px rgba(0,0,0,.15); }
+    .hero-card { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 30px; padding: 26px; box-shadow: 0 22px 60px rgba(0,0,0,.16); }
+    .hero-card strong { display: block; font-size: 56px; line-height: 1; letter-spacing: -1px; }
+    .hero-card span { display: block; margin-top: 8px; color: rgba(255,255,255,.9); }
+    .stat-row { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-top: 18px; }
+    .mini { padding: 16px; border-radius: 20px; background: rgba(255,255,255,.16); }
+    main section { max-width: 1180px; margin: 0 auto; padding: 78px 22px; }
+    .section-title { font-size: clamp(30px, 4vw, 48px); line-height: 1.1; color: var(--dark); letter-spacing: -.8px; margin-bottom: 14px; }
+    .section-lead { color: var(--muted); font-size: 18px; max-width: 820px; margin-bottom: 34px; }
+    .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 26px; padding: 24px; box-shadow: var(--shadow); }
+    .card h3 { color: var(--dark); margin-bottom: 10px; font-size: 21px; }
+    .number { font-size: 42px; font-weight: 900; color: var(--accent); letter-spacing: -1px; line-height: 1; margin-bottom: 8px; }
+    .muted { color: var(--muted); }
+    .accent-block { background: #e9f4f7; border-left: 6px solid var(--accent); padding: 22px; border-radius: 22px; margin-top: 20px; }
+    .warm { background: #fff3d7; border-color: #f5d27d; }
+    .green { background: #edf7ef; border-color: #a6d2b2; }
+    .chart-card img, .photo-card img { width: 100%; border-radius: 20px; display:block; border: 1px solid var(--line); background:white; }
+    .chart-card .caption, .photo-card .caption { font-size: 14px; color: var(--muted); margin-top: 10px; }
+    .interview { display: grid; gap: 14px; }
+    details { background: white; border: 1px solid var(--line); border-radius: 20px; padding: 18px 20px; box-shadow: 0 10px 26px rgba(24,33,47,.04); }
+    summary { cursor: pointer; font-weight: 800; color: var(--dark); }
+    details p { margin-top: 12px; color: #344054; }
+    .quote { font-size: 22px; line-height: 1.45; color: var(--dark); background: white; border-radius: 26px; padding: 28px; border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .quote small { display:block; margin-top: 12px; color: var(--muted); font-size: 14px; }
+    ul.clean { padding-left: 18px; }
+    ul.clean li { margin: 8px 0; }
+    .tag { display: inline-block; padding: 6px 10px; border-radius: 999px; background: #eef6f8; color: #285a6b; font-weight: 800; font-size: 13px; margin: 4px 6px 4px 0; }
+    .two-col { columns: 2; column-gap: 28px; }
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .budget { border: 1px solid var(--line); border-radius: 22px; padding: 20px; background: white; }
+    .budget-row { display: flex; justify-content: space-between; gap: 15px; border-bottom: 1px dashed #d9cdbd; padding: 10px 0; }
+    .budget-row:last-child { border-bottom: 0; }
+    .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 26px; box-shadow: var(--shadow); background: #111827; }
+    .video-wrap video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+    .data-table-wrap { overflow-x: auto; border-radius: 20px; border: 1px solid var(--line); background: white; }
+    table.data-table { width: 100%; border-collapse: collapse; min-width: 640px; }
+    .data-table th, .data-table td { padding: 14px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .data-table th { background: #eef6f8; color: var(--dark); font-weight: 900; }
+    .data-table tr:last-child td { border-bottom: 0; }
+    .data-note { margin-top: 14px; color: var(--muted); font-size: 14px; }
+    .video-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+    .video-wrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+    footer { padding: 38px 22px; text-align:center; color: var(--muted); border-top: 1px solid var(--line); background: #fffaf1; }
+    .source-list a { color: #285a6b; word-break: break-word; }
+    @media (max-width: 900px) { .hero-inner, .grid, .grid-2, .compare, .video-grid { grid-template-columns:1fr; } .two-col { columns:1; } .hero { min-height:auto; } nav { align-items:flex-start; flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Без упереджень: інтеграція ВПО у громадах</div>
+      <div class="nav-links">
+        <a href="#problem">Проблема</a>
+        <a href="#data">Статистика</a>
+        <a href="#interviews">Інтерв’ю</a>
+        <a href="#lviv">Львів</a>
+        <a href="#cases">Кейси</a>
+        <a href="#solutions">Рішення</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="eyebrow">локальне дослідження • Бучанська громада • 2026</div>
+        <h1>Без упереджень: інтеграція ВПО у громадах</h1>
+        <p>Студентський проєкт про упереджене ставлення до внутрішньо переміщених осіб: звідки виникають стереотипи, як вони впливають на інтеграцію і що може зробити громада, бізнес та влада.</p>
+        <a class="btn" href="#data">Перейти до аналітики</a>
+      </div>
+      <div class="hero-card">
+        <strong>11 722</strong>
+        <span>внутрішньо переміщені особи проживали у Бучанській громаді станом на 01.04.2026.</span>
+        <div class="stat-row">
+          <div class="mini"><b>58,4%</b><br>жінки</div>
+          <div class="mini"><b>19,3%</b><br>діти</div>
+          <div class="mini"><b>23,9%</b><br>люди похилого віку</div>
+          <div class="mini"><b>84,1%</b><br>у межах м. Буча</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section id="problem">
+      <h2 class="section-title">Про що цей проєкт</h2>
+      <p class="section-lead">Упередження щодо ВПО часто проявляється не як відкрита ворожість, а як побутове дистанціювання: «вони отримують більше», «вони не наші», «вони тимчасові». Через це люди, які втратили дім або безпеку, можуть одночасно шукати допомогу й доводити, що вони мають право бути частиною нової громади.</p>
+      <div class="grid">
+        <article class="card">
+          <div class="number">1</div>
+          <h3>Стереотип</h3>
+          <p>Людину починають оцінювати не за діями, а за статусом ВПО або регіоном походження.</p>
+        </article>
+        <article class="card">
+          <div class="number">2</div>
+          <h3>Бар’єр</h3>
+          <p>Упередження ускладнює оренду житла, працевлаштування, комунікацію з сусідами та участь у житті громади.</p>
+        </article>
+        <article class="card">
+          <div class="number">3</div>
+          <h3>Рішення</h3>
+          <p>Інтеграція працює тоді, коли ВПО сприймають не як «отримувачів допомоги», а як мешканців із досвідом, навичками і правом голосу.</p>
+        </article>
+      </div>
+      <div class="accent-block warm"><b>У Бучі було проведено локальне опитування та експертні інтерв’ю.</b> Матеріали поєднують статистику громади, інтерв’ю з істориком Ярославом Грицаком та коментарі Ірини Пасічної, начальниці Управління соціальної політики Бучанської міської ради.</div>
+    </section>
+
+    <section id="data">
+      <h2 class="section-title">Буча в цифрах: не абстрактна проблема, а реальні люди</h2>
+      <p class="section-lead">Аналітика побудована на даних Бучанської міської територіальної громади станом на 01.04.2026.</p>
+      <div class="grid-2">
+        <article class="card chart-card">
+          <h3>Кількість ВПО зросла більш ніж удвічі</h3>
+          <img src="assets/chart_growth.png" alt="Графік динаміки ВПО в Бучанській громаді" />
+          <p class="caption">З 01.01.2022 до 01.04.2026 кількість ВПО збільшилася з 4 463 до 11 722 осіб.</p>
+        </article>
+        <article class="card chart-card">
+          <h3>Соціально-демографічний склад</h3>
+          <img src="assets/chart_profile.png" alt="Склад ВПО: чоловіки, жінки, діти, люди похилого віку" />
+          <p class="caption">У громаді проживають 4 882 чоловіки, 6 840 жінок, серед них 2 263 дітей і 2 796 людей похилого віку.</p>
+        </article>
+      </div>
+      <div class="grid-2" style="margin-top:20px;">
+        <article class="card chart-card">
+          <h3>Регіони походження</h3>
+          <img src="assets/chart_origins.png" alt="Звідки переїхали ВПО до Бучі" />
+          <p class="caption">Найбільші групи — з Донецької та Луганської областей. Це пояснює, чому тема «своїх» і «чужих» часто пов’язана з регіональними стереотипами.</p>
+        </article>
+        <article class="card chart-card">
+          <h3>Місто і старостинські округи</h3>
+          <img src="assets/chart_city_starosta.png" alt="Розподіл ВПО між Бучею та старостинськими округами" />
+          <p class="caption">9 860 ВПО проживають у місті Буча, 1 862 — у старостинських округах громади.</p>
+        </article>
+      </div>
+      <div class="grid-2" style="margin-top:20px;">
+        <article class="card photo-card">
+          <h3>Скан документа — джерело статистики</h3>
+          <img src="assets/bucha_idp_info.jpg" alt="Скан документа з інформацією про ВПО в Бучанській громаді" />
+          <p class="caption">Вихідний документ Бучанської громади з ключовими показниками про ВПО станом на 01.04.2026.</p>
+        </article>
+        <article class="card">
+          <h3>Переоформлені табличні дані</h3>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Показник</th>
+                  <th>Кількість</th>
+                  <th>Що це означає для теми упереджень</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Загальна кількість ВПО у Бучанській громаді</td>
+                  <td><b>11 722</b></td>
+                  <td>Йдеться не про окремі випадки, а про значну частину життя громади.</td>
+                </tr>
+                <tr>
+                  <td>Жінки</td>
+                  <td><b>6 840</b></td>
+                  <td>Підтримка має враховувати питання праці, догляду за дітьми, безпеки та соціальної адаптації.</td>
+                </tr>
+                <tr>
+                  <td>Чоловіки</td>
+                  <td><b>4 882</b></td>
+                  <td>Стереотипи про «утриманців» не пояснюють реальної структури громади й потреб людей.</td>
+                </tr>
+                <tr>
+                  <td>Діти</td>
+                  <td><b>2 263</b></td>
+                  <td>Інтеграція залежить від доступу до школи, садка, гуртків і безпечного середовища.</td>
+                </tr>
+                <tr>
+                  <td>Люди похилого віку</td>
+                  <td><b>2 796</b></td>
+                  <td>Потрібні не лише виплати, а й медичні, соціальні та комунікаційні послуги.</td>
+                </tr>
+                <tr>
+                  <td>Проживають у місті Буча</td>
+                  <td><b>9 860</b></td>
+                  <td>Більшість ВПО щоденно взаємодіють із міською інфраструктурою та місцевими мешканцями.</td>
+                </tr>
+                <tr>
+                  <td>Проживають у старостинських округах</td>
+                  <td><b>1 862</b></td>
+                  <td>Інтеграційні рішення мають працювати не лише в центрі громади, а й у старостинських округах.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="data-note">Табличні дані переоформлено у зручний для читання формат без використання сирої фотографії таблиці.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="interviews">
+      <h2 class="section-title">Інтерв’ю: історичний і соціальний погляд</h2>
+      <p class="section-lead">Щоб не зводити тему до сухої статистики, ми поєднали її з поясненням історичних стереотипів і практичним досвідом роботи з ВПО на рівні громади.</p>
+      <div class="grid-2">
+        <div class="quote">«Нації — це комунікації. Коли регіони довго не мали спільного інформаційного простору, між ними легше виникали уявлення про “чужих”.»<small>За змістом інтерв’ю з Ярославом Грицаком</small></div>
+        <div class="quote">«Головний інструмент інтеграції — нормалізація: ВПО мають бути видимими як повноправні мешканці, а не як окрема “проблемна група”.»<small>За змістом інтерв’ю з Іриною Пасічною</small></div>
+      </div>
+
+      <div class="grid-2" style="margin-top:24px;">
+        <article class="card">
+          <h3>Ярослав Грицак: головні тези</h3>
+          <div class="interview">
+            <details open><summary>1. Як формувались образи «своїх» і «чужих»?</summary><p>У ХІХ — першій половині ХХ ст. українські регіони часто належали до різних держав, тому між ними було мало комунікації. Через це образи «своїх» і «чужих» формувалися радше навколо етнічних і релігійних груп, а не навколо сучасних регіонів України.</p></details>
+            <details><summary>2. Роль імперської, радянської та російської політики</summary><p>Офіційно регіональні стереотипи не завжди насаджувалися прямо, але радянський і пострадянський простір закріплював образи «западняків», «бандерівців» або «Донбасу, який годує Україну». Такі штампи потім легко використовувала пропаганда.</p></details>
+            <details><summary>3. Шкільна історія і регіональні поділи</summary><p>Шкільний наратив часто концентрувався на Києві, Львові та частково Харкові. Через це інші регіони могли виглядати менш «видимими» в уявленні про Україну, що підтримувало стереотип «двох Україн».</p></details>
+            <details><summary>4. Чи пов’язане упередження до ВПО з браком спільної історії?</summary><p>Так, але лише частково. Війна змусила багатьох українців заново усвідомити, що східні й південні території — це не абстрактна «інша Україна», а частина спільного дому.</p></details>
+            <details><summary>5. Історичні травми</summary><p>Питання впливу травм на ставлення до переселенців потребує окремих досліджень. Важливо не підміняти дослідження припущеннями.</p></details>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Ірина Пасічна: головні висновки</h3>
+          <div class="interview">
+            <details open><summary>1. Системні бар’єри інтеграції</summary><p>Найчастіше заважають нестабільність програми «Прихисток», скасування частини виплат на проживання, нестача місць у садках і школах, а також складний доступ до пільгових кредитів на житло.</p></details>
+            <details><summary>2. Психологічний вплив упереджень</summary><p>У підлітків і молоді можуть з’являтися самостигматизація, відчуття «життя на валізах», втрата ідентичності та захисна агресія. Тому дискримінація — це не лише соціальна, а й психологічна проблема.</p></details>
+            <details><summary>3. Російська пропаганда і ІПСО</summary><p>Пропаганда підсилює міфи про «колективну провину», «ідеологічну чужість» та «дефіцит ресурсів». Це переводить розмову з рівня солідарності на рівень підозри.</p></details>
+            <details><summary>4. Що може робити міська рада?</summary><p>Потрібні спільний інформаційний простір, заходи пам’яті й вшанування, інтеграційні хаби, комунікаційний моніторинг і швидке спростування конфліктних маніпуляцій.</p></details>
+            <details><summary>5. Головна порада</summary><p>Не сприймати ВПО як «об’єкт допомоги». Це люди з компетенціями, податками, досвідом і потенціалом для розвитку громади.</p></details>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="barriers">
+      <h2 class="section-title">Як упередження працює в повсякденному житті</h2>
+      <p class="section-lead">Стереотипи стають небезпечними тоді, коли вони переходять із розмов у рішення: кому здати квартиру, кого взяти на роботу, кого запросити в батьківський чат, чиє слово врахувати на громадських обговореннях.</p>
+      <div class="grid">
+        <article class="card"><h3>Житло</h3><p>Орендодавці можуть боятися затримок компенсацій або вважати ВПО «ризиковими» орендарями. Це підвищує нестабільність і залежність від тимчасових рішень.</p></article>
+        <article class="card"><h3>Освіта</h3><p>Коли місць у садках і школах бракує, дитина може довше залишатися вдома. Це погіршує соціалізацію і посилює відчуття ізольованості родини.</p></article>
+        <article class="card"><h3>Робота</h3><p>Людина, яка переїхала, часто змінює професію або починає все заново. Підтримка має бути не лише фінансовою, а й професійною.</p></article>
+      </div>
+    </section>
+
+    <section id="lviv">
+      <h2 class="section-title">Львівський контекст: бюджет і закупівлі як частина теми</h2>
+      <p class="section-lead">Упередження часто з’являється там, де люди не бачать прозорості: скільки коштів виділяється, на що саме вони йдуть і чи справді підтримка ВПО «забирає» ресурси в місцевих. Тому важливо говорити мовою відкритих даних.</p>
+      <div class="compare">
+        <div class="budget">
+          <h3>Бюджет соціального захисту Львова</h3>
+          <p class="muted">За публічними повідомленнями про бюджет Львівської громади на 2026 рік, на соціальний захист і підтримку вразливих груп передбачено:</p>
+          <div class="number" style="margin-top:14px;">587,1 млн грн</div>
+          <p>Це на 32,6 млн грн більше, ніж торік. Для нашої теми це показує: підтримка ВПО має розглядатися не як «привілей», а як частина ширшої політики соціальної стійкості громади.</p>
+        </div>
+        <div class="budget">
+          <h3>Приклади закупівель за ЄДРПОУ 26256754</h3>
+          <p class="muted">Код 26256754 стосується Управління соціального захисту департаменту гуманітарної політики Львівської міської ради. У Prozorro можна бачити окремі договори й джерело фінансування.</p>
+          <div class="budget-row"><span>Меблі для конференц-залу</span><b>97 000 грн</b></div>
+          <div class="budget-row"><span>Післябудівельне прибирання приміщень</span><b>15 300,14 грн</b></div>
+          <div class="budget-row"><span>Електронні комунікаційні послуги</span><b>10 080 грн</b></div>
+          <div class="budget-row"><span>Підтримка електронного документообігу</span><b>77 776,80 грн</b></div>
+          <p class="muted" style="margin-top:12px;">Це не повна сума допомоги ВПО, а лише приклади закупівель управління, які варто відокремлювати від міфів про «надмірні привілеї».</p>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="cases">
+      <h2 class="section-title">Реальні кейси успішної інтеграції ВПО у громадах</h2>
+      <p class="section-lead">Ці приклади показують, що інтеграція працює тоді, коли ВПО не відокремлюють від місцевих мешканців, а залучають до спільних рішень, роботи, волонтерства, освіти й розвитку громади.</p>
+      <div class="grid-2">
+        <article class="card green">
+          <span class="tag">Павлоград</span>
+          <h3>Рада ВПО як міст між переселенцями, бізнесом і владою</h3>
+          <p>У Павлоградській громаді, де офіційно зареєстровано понад 20,5 тис. ВПО, Рада ВПО ініціювала доповнення місцевої програми заходами з інтеграції. Було проведено опитування переселенців, бізнесу та місцевих мешканців, а пріоритетами стали інформаційна підтримка, інклюзія, працевлаштування і розвиток підприємництва. Окремий результат — понад 432 родини стали на облік для отримання тимчасового житла.</p>
+          <p class="muted">Чому це важливо для нашої теми: громада перестає сприймати ВПО лише як отримувачів допомоги і бачить їх як учасників ухвалення рішень.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">Липоводолинська громада</span>
+          <h3>Інтеграційний простір для підтримки й відновлення</h3>
+          <p>У Липоводолинській громаді на Сумщині Рада ВПО разом із благодійним фондом, місцевою владою, громадськими організаціями та медіа створила інтеграційний простір. Там проводять заходи для адаптації ВПО до життя громади, а також зустрічі з емоційного розвантаження для мам із дітьми.</p>
+          <p class="muted">Чому це важливо для нашої теми: простір для зустрічей зменшує дистанцію між людьми, бо переселенці стають видимими як сусіди, батьки, працівники й активні мешканці.</p>
+        </article>
+
+        <article class="card warm">
+          <span class="tag">Ужгород</span>
+          <h3>Участь ВПО у громадському житті та захисті виборчих прав</h3>
+          <p>В Ужгороді проводилися заходи на підтримку виборчих прав ВПО, зокрема форум-театр, де учасники моделювали ситуацію захисту права переселенця перед посадовцем. Завдяки залученню місцевих депутатів і громадських організацій міська рада звернулася до Верховної Ради щодо законодавчих змін у сфері виборчих прав мобільних громадян.</p>
+          <p class="muted">Чому це важливо для нашої теми: інтеграція означає не тільки допомогу, а й право ВПО впливати на рішення громади, у якій вони реально живуть.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">Всеукраїнський приклад</span>
+          <h3>Історії взаємодопомоги замість образу «чужих»</h3>
+          <p>У серії матеріалів «ВПО — Великий Приклад Об’єднання» переселенці розповідають історії інтеграції у нових громадах. Головна ідея таких історій — після базової допомоги людям потрібні не лише житло й робота, а й друзі, підтримка, соціалізація та можливість реалізувати свої навички.</p>
+          <p class="muted">Чому це важливо для нашої теми: реальні історії руйнують стереотипи краще за абстрактні заклики, бо показують внесок ВПО у спільне життя.</p>
+        </article>
+      </div>
+
+      <div class="accent-block green" style="margin-top:20px;">
+        <b>Зв’язок із Бучанською громадою:</b> для Бучі такі кейси можуть бути практичними орієнтирами: створення інтеграційних просторів, участь ВПО у консультаціях, опитування потреб, підтримка працевлаштування та публічні історії успішної адаптації. Саме так статус «ВПО» поступово перестає бути маркером відмінності й перетворюється на частину спільної історії громади.
+      </div>
+    </section>
+
+    <section id="solutions">
+      <h2 class="section-title">Що реально зменшує упередження</h2>
+      <p class="section-lead">Найкращі рішення — ті, які замінюють поділ «ми/вони» на спільну участь у житті громади.</p>
+      <div class="grid">
+        <article class="card green"><h3>Для громади</h3><ul class="clean"><li>Говорити «нові мешканці громади», а не тільки «ВПО».</li><li>Проводити зустрічі у форматі «кава з сусідом».</li><li>Залучати ВПО до ОСББ, волонтерства і локальних ініціатив.</li></ul></article>
+        <article class="card warm"><h3>Для бізнесу</h3><ul class="clean"><li>Запускати короткі стажування і перекваліфікацію.</li><li>Проводити тренінги етичної комунікації.</li><li>Оцінювати людину за навичками, а не за місцем походження.</li></ul></article>
+        <article class="card"><h3>Для влади</h3><ul class="clean"><li>Створити зрозумілий «пакет адаптації» для нових мешканців.</li><li>Пояснювати, як розподіляються ресурси.</li><li>Включати ВПО у робочі групи та громадські консультації.</li></ul></article>
+      </div>
+      <div class="accent-block green"><b>Фінальний висновок:</b> упередження зменшується не тоді, коли про толерантність просто говорять, а тоді, коли люди мають спільні справи, прозорі правила і можливість бачити одне одного не через статус, а через реальний внесок у громаду.</div>
+    </section>
+
+    <section id="video">
+      <h2 class="section-title">Відеоматеріали</h2>
+      <p class="section-lead">Два відео доповнюють тему сайту: вони допомагають подати проблему упередженого ставлення до ВПО через інтерв’ю та візуальне пояснення.</p>
+      <div class="video-grid">
+        <article class="card">
+          <h3>Інтерв’ю з Пасічною Іриною Юріївною — начальницею Управління соціальної політики Бучанської міської ради, частина 1</h3>
+          <div class="video-wrap">
+            <iframe
+              src="https://www.youtube.com/embed/HRgIlZ522AM"
+              title="Інтерв’ю з Пасічною Іриною Юріївною — начальницею Управління соціальної політики Бучанської міської ради, частина 1"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Інтерв’ю з Пасічною Іриною Юріївною — начальницею Управління соціальної політики Бучанської міської ради, частина 2</h3>
+          <div class="video-wrap">
+            <iframe
+              src="https://www.youtube.com/embed/MloCn9TiDbQ"
+              title="Інтерв’ю з Пасічною Іриною Юріївною — начальницею Управління соціальної політики Бучанської міської ради, частина 2"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="sources">
+      <h2 class="section-title">Джерела</h2>
+      <div class="card source-list">
+        <ul class="clean">
+          <li><a href="https://prozorro.gov.ua/uk/search/tender?text=26256754&page=3" target="_blank" rel="noopener">https://prozorro.gov.ua/uk/search/tender?text=26256754&page=3</a></li>
+          <li><a href="https://www.ombudsman.gov.ua/storage/app/media/uploaded-files/zvit-1-02122025-1620-analitichniy-zvit-za-rezultatami-doslidzhennya,-shchodo-integratsii-studentstva-z-timchasovo-okupovanikh-teritoriy-u-zakladakh-vi.pdf" target="_blank" rel="noopener">https://www.ombudsman.gov.ua/storage/app/media/uploaded-files/zvit-1-02122025-1620-analitichniy-zvit-za-rezultatami-doslidzhennya,-shchodo-integratsii-studentstva-z-timchasovo-okupovanikh-teritoriy-u-zakladakh-vi.pdf</a></li>
+          <li><a href="https://day.kyiv.ua/article/cuspilstvo/obraz-pereselentsiv-formuyut-zmi" target="_blank" rel="noopener">https://day.kyiv.ua/article/cuspilstvo/obraz-pereselentsiv-formuyut-zmi</a></li>
+          <li><a href="https://psychology.ucu.edu.ua/news/psyhologichna-poradnya-konsultatsiya-dlya-vpo/7" target="_blank" rel="noopener">https://psychology.ucu.edu.ua/news/psyhologichna-poradnya-konsultatsiya-dlya-vpo/7</a></li>
+          <li><a href="https://www.ukrinform.ua/rubric-society/3950991-do-pereselenciv-pozitivno-stavlatsa-93-ukrainciv.html" target="_blank" rel="noopener">https://www.ukrinform.ua/rubric-society/3950991-do-pereselenciv-pozitivno-stavlatsa-93-ukrainciv.html</a></li>
+          <li><a href="https://dspace.znu.edu.ua/xmlui/bitstream/handle/12345/25973/%D0%A0%D0%B5%D1%88%D0%B5%D1%82%D0%BD%D1%96%D0%BA%D0%BE%D0%B2%D0%B0%20%D0%9A.%D0%92..pdf?sequence=1&isAllowed=y" target="_blank" rel="noopener">https://dspace.znu.edu.ua/xmlui/bitstream/handle/12345/25973/%D0%A0%D0%B5%D1%88%D0%B5%D1%82%D0%BD%D1%96%D0%BA%D0%BE%D0%B2%D0%B0%20%D0%9A.%D0%92..pdf?sequence=1&isAllowed=y</a></li>
+          <li><a href="https://oporaua.org/viyna/social-na-zgurtovanist-v-ukrayini-vikliki-ta-bar-yeri-dlya-vrazlivih-grup-25748" target="_blank" rel="noopener">https://oporaua.org/viyna/social-na-zgurtovanist-v-ukrayini-vikliki-ta-bar-yeri-dlya-vrazlivih-grup-25748</a></li>
+          <li><a href="https://radyvpo.org.ua/articles/vpo-zminyuyut-gromady-pryklady-shho-nadyhayut/" target="_blank" rel="noopener">https://radyvpo.org.ua/articles/vpo-zminyuyut-gromady-pryklady-shho-nadyhayut/</a></li>
+          <li><a href="https://cedos.org.ua/researches/vpo-integration-index/cases/" target="_blank" rel="noopener">https://cedos.org.ua/researches/vpo-integration-index/cases/</a></li>
+          <li><a href="https://hromadske.radio/publications/vidchuttia-nalezhnosti-do-hromady-pryklady-ob-iednannia-mistsevykh-zhyteliv-ta-vpo" target="_blank" rel="noopener">https://hromadske.radio/publications/vidchuttia-nalezhnosti-do-hromady-pryklady-ob-iednannia-mistsevykh-zhyteliv-ta-vpo</a></li>
+          <li><a href="https://shotam.info/vyyshla-seriia-video-vpo-velykyy-pryklad-ob-iednannia-pro-intehratsiiu-pereselentsiv-u-hromadakh/" target="_blank" rel="noopener">https://shotam.info/vyyshla-seriia-video-vpo-velykyy-pryklad-ob-iednannia-pro-intehratsiiu-pereselentsiv-u-hromadakh/</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2026 Без упереджень: інтеграція ВПО у громадах.</footer>
+</body>
+</html>
